@@ -21,6 +21,7 @@ def depart_title(self, node):
 
     if (self.permalink_text and self.builder.add_permalinks and
             node.parent.hasattr('ids') and node.parent['ids']):
+
         aname = node.parent['ids'][0]
 
         if close_tag.startswith('</a></h'):
@@ -320,7 +321,14 @@ class SlideTranslator(BaseSlideTranslator):
     def depart_title(self, node):
 
         if node.parent.hasattr('ids') and node.parent['ids']:
-            aname = node.parent['ids'][0]
+
+            # FIXME: use node.parent.travers to determine slide number?
+            if self.builder.app.config.slide_links_as_numbers:
+                # import pdb
+                # pdb.set_trace()
+                aname = node.parent['ids'][0]
+            else:
+                aname = node.parent['ids'][0]
 
             if self.builder.app.config.slide_link_to_html:
                 self.body.append(
